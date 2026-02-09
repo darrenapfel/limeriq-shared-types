@@ -28,6 +28,19 @@ export interface PairingCreateResponse {
   node_identity_fingerprint: string;
 }
 
+// ── POST /api/limerclaw/pairing/resolve ──
+
+export interface PairingResolveRequest {
+  pairing_code: string;
+}
+
+export interface PairingResolveResponse {
+  pairing_session_id: string;
+  node_id: string;
+  node_identity_fingerprint: string;
+  expires_at: string;
+}
+
 // ── POST /api/limerclaw/pairing/confirm ──
 
 export interface PairingConfirmRequest {
