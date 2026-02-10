@@ -57,16 +57,17 @@ Wire format types for relay communication.
 - `isRelayControlMessage()` function (line 61-63): Type guard for control messages
 - `isEnvelope()` function (line 66-68): Type guard for envelopes
 
-### `src/api-contracts.ts` (line 1-78)
+### `src/api-contracts.ts` (line 1-92)
 HTTP API request/response type definitions.
 
 - `DeviceRegisterRequest/Response` (lines 5-16): Device registration
 - `PairingCreateRequest/Response` (lines 20-29): Pairing session creation
-- `PairingConfirmRequest/Response` (lines 33-40): Pairing confirmation
-- `NodeDirectoryEntry` (lines 44-54): Single node info
-- `NodesListResponse` (lines 56-58): List of nodes
-- `PushNotifyRequest/Response` (lines 62-71): Push notification trigger
-- `ApiErrorResponse` (lines 75-78): Standard error shape
+- `PairingResolveRequest/Response` (lines 33-41): Pairing code resolution
+- `PairingConfirmRequest/Response` (lines 45-52): Pairing confirmation
+- `NodeDirectoryEntry` (lines 56-66): Single node info
+- `NodesListResponse` (lines 68-70): List of nodes
+- `PushNotifyRequest/Response` (lines 74-83): Push notification trigger
+- `ApiErrorResponse` (lines 87-92): Standard error shape
 
 ### `src/db-types.ts` (line 1-61)
 Supabase table row type definitions.

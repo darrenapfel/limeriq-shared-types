@@ -75,12 +75,13 @@ Type guards:
 
 ### API Contracts (`src/api-contracts.ts`)
 
-Five API endpoint pairs:
+Six API endpoint pairs:
 
 | Endpoint | Request Type | Response Type |
 |----------|-------------|---------------|
 | `POST /api/limerclaw/devices/register` | `DeviceRegisterRequest` | `DeviceRegisterResponse` |
 | `POST /api/limerclaw/pairing/create` | `PairingCreateRequest` | `PairingCreateResponse` |
+| `POST /api/limerclaw/pairing/resolve` | `PairingResolveRequest` | `PairingResolveResponse` |
 | `POST /api/limerclaw/pairing/confirm` | `PairingConfirmRequest` | `PairingConfirmResponse` |
 | `GET /api/limerclaw/nodes/me` | (none) | `NodesListResponse` |
 | `POST /api/limerclaw/push/notify` | `PushNotifyRequest` | `PushNotifyResponse` |

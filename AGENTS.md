@@ -63,5 +63,5 @@ import { PROTOCOL_VERSION, isEnvelope } from '@limerclaw/shared-types';
 **Mobile App (`limeriq-mobile-app`):**
 - `LimerClawEnvelope`, `EncryptionBlock`, `EnvelopePeer` -- building envelopes to send
 - `RelayControlMessage`, `isRelayControlMessage()` -- handling relay control messages
-- `DeviceRegisterRequest/Response`, `PairingCreateRequest/Response`, `PairingConfirmRequest/Response` -- API calls
+- `DeviceRegisterRequest/Response`, `PairingCreateRequest/Response`, `PairingResolveRequest/Response`, `PairingConfirmRequest/Response` -- API calls
 - `PROTOCOL_VERSION`, `HEARTBEAT_INTERVAL_SECONDS`, `EncryptionScheme`, `PeerKind` -- constants
