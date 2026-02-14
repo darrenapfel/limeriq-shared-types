@@ -43,6 +43,10 @@ export interface LimerClawEnvelope {
   recipient: EnvelopePeer;
   /** Encrypted payload. */
   encryption: EncryptionBlock;
+  /** Target agent ID (omit for boss agent). */
+  agent_id?: string;
+  /** Hint for routing (e.g. 'chat', 'interactive_prompt'). */
+  message_type?: string;
 }
 
 /** Relay control messages (ping, pong, backlog_truncated, error). */

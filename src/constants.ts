@@ -110,3 +110,8 @@ export const RelayControlType = {
 } as const;
 
 export type RelayControlType = (typeof RelayControlType)[keyof typeof RelayControlType];
+
+// ── Boss agent addressing ──
+
+/** Default agent ID for the boss agent. */
+export const BOSS_AGENT_ID = 'boss';

@@ -6,6 +6,7 @@ import type {
   PairingSessionStatus,
   PairingStatus,
 } from './constants';
+import type { AgentKind, ExecutionMode } from './agent-types';
 
 /** Row type for `limerclaw_nodes` table. */
 export interface LimerClawNodeRow {
@@ -58,4 +59,18 @@ export interface LimerClawPairingRow {
   user_id: string;
   paired_at: string;
   status: PairingStatus;
+}
+
+/** Row type for `limerclaw_node_agents` table. */
+export interface LimerClawNodeAgentRow {
+  id: string;
+  node_id: string;
+  agent_id: string;
+  name: string;
+  kind: AgentKind;
+  status: string;
+  description: string | null;
+  execution_mode: ExecutionMode;
+  created_at: string;
+  updated_at: string;
 }
