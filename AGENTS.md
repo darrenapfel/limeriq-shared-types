@@ -9,6 +9,7 @@
 ### Key Constraints
 
 - **No runtime code except type guards.** The only functions in this package are `isRelayControlMessage()` and `isEnvelope()` in `src/envelope.ts`. Everything else is `interface`, `type`, or `const` declarations.
+- **Agent types live in `src/agent-types.ts`.** This file defines all agent-system enums, interfaces, and the `DecryptedPayload` union. It follows the same const-object-plus-type pattern used elsewhere.
 - **No build step.** `tsconfig.json` sets `noEmit: true`. The `typecheck` script (`tsc --noEmit`) validates types only.
 - **Barrel export pattern.** All types must be re-exported through `src/index.ts`. If you add a new file, add `export * from './your-file'` to `src/index.ts`.
 - **Const-object-plus-type pattern for enums.** All enum-like values use a `const` object with an extracted `type` (e.g., `NodeMode` is both a `const` object and a `type`). Follow this pattern when adding new enums.
@@ -53,15 +54,22 @@ import { PROTOCOL_VERSION, isEnvelope } from '@limerclaw/shared-types';
 - `LimerClawEnvelope`, `RelayControlMessage`, `RelayMessage` -- wire format
 - `isRelayControlMessage()`, `isEnvelope()` -- type guards for message routing
 - `PROTOCOL_VERSION`, `MAX_ENVELOPE_BYTES`, `MAX_BACKLOG_COUNT`, `BACKLOG_TTL_SECONDS`, `MAX_MSGS_PER_MINUTE` -- protocol constants
+- `agent_id`, `message_type` on `LimerClawEnvelope` -- relay passes through but does not inspect
 
 **Service (`limeriq-service`):**
 - `DeviceRegisterRequest/Response`, `PairingCreateRequest/Response`, etc. -- API contract types
-- `LimerClawNodeRow`, `LimerClawDeviceRow`, `LimerClawPairingSessionRow`, `LimerClawPairingRow` -- DB row types
+- `NodeAgentEntry`, `NodeAgentsListResponse`, `AgentSyncRequest/Response` -- agent sync API contracts
+- `LimerClawNodeRow`, `LimerClawDeviceRow`, `LimerClawPairingSessionRow`, `LimerClawPairingRow`, `LimerClawNodeAgentRow` -- DB row types
 - `NodeMode`, `NodeStatus`, `DeviceStatus`, `PairingSessionStatus`, `PairingStatus` -- status enums
+- `AgentKind`, `AgentStatus`, `ExecutionMode` -- agent enums (imported from `agent-types`)
 - `EventType`, `ALLOWED_EVENT_TYPES` -- push notification event types
 
 **Mobile App (`limeriq-mobile-app`):**
 - `LimerClawEnvelope`, `EncryptionBlock`, `EnvelopePeer` -- building envelopes to send
 - `RelayControlMessage`, `isRelayControlMessage()` -- handling relay control messages
 - `DeviceRegisterRequest/Response`, `PairingCreateRequest/Response`, `PairingResolveRequest/Response`, `PairingConfirmRequest/Response` -- API calls
-- `PROTOCOL_VERSION`, `HEARTBEAT_INTERVAL_SECONDS`, `EncryptionScheme`, `PeerKind` -- constants
+- `PROTOCOL_VERSION`, `HEARTBEAT_INTERVAL_SECONDS`, `EncryptionScheme`, `PeerKind`, `BOSS_AGENT_ID` -- constants
+- `AgentKind`, `AgentStatus`, `ExecutionMode`, `AgentEventType` -- agent enums
+- `AgentInfo`, `AgentEvent`, `InteractivePrompt/Response`, `ChatMessage`, `ApprovalRequest/Response` -- agent interfaces
+- `DecryptedPayload`, `DecryptedMessageType` -- decrypted envelope payload types
+- `NodeAgentEntry`, `NodeAgentsListResponse` -- agent listing from service

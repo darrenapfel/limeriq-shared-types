@@ -49,9 +49,11 @@ There is no build/compile step. The `tsconfig.json` has `noEmit: true`. This pac
 
 3. **New DB row type:** Add to `src/db-types.ts`, importing any needed enum types from `./constants`.
 
-4. **New source file:** Create the file in `src/`, then add `export * from './your-file'` to `src/index.ts`.
+4. **New agent-related type:** Add to `src/agent-types.ts`. Use the const-object-plus-type pattern for enums. If the type is a new decrypted payload shape, add it to the `DecryptedPayload` union and `DecryptedMessageType`.
 
-5. **Validate:** Run `npm run typecheck` to ensure no errors.
+5. **New source file:** Create the file in `src/`, then add `export * from './your-file'` to `src/index.ts`.
+
+6. **Validate:** Run `npm run typecheck` to ensure no errors.
 
 ## Consuming This Package
 

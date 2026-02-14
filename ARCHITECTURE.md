@@ -2,7 +2,7 @@
 
 ## Overview
 
-This package defines four categories of shared types, organized by concern:
+This package defines five categories of shared types, organized by concern:
 
 ```
 src/
@@ -11,6 +11,7 @@ src/
   envelope.ts         # Wire format types + type guards
   api-contracts.ts    # HTTP API request/response shapes
   db-types.ts         # Supabase database row types
+  agent-types.ts      # Agent system enums, interfaces, and decrypted payload types
 ```
 
 ## Type Hierarchy
@@ -38,6 +39,8 @@ PairingStatus: active | revoked
 EncryptionScheme: sodium-session-v1
 PeerKind: device | node
 RelayControlType: ping | pong | backlog_truncated | error
+
+BOSS_AGENT_ID = 'boss' (string constant for default agent addressing)
 ```
 
 ### Envelope Types (`src/envelope.ts`)
@@ -55,11 +58,13 @@ LimerClawEnvelope
   |     +-- device_id?: string
   +-- recipient: EnvelopePeer
   +-- encryption: EncryptionBlock
-        +-- scheme: EncryptionScheme
-        +-- key_id: string
-        +-- nonce: string (base64)
-        +-- ciphertext: string (base64)
-        +-- aad: string (base64)
+  |     +-- scheme: EncryptionScheme
+  |     +-- key_id: string
+  |     +-- nonce: string (base64)
+  |     +-- ciphertext: string (base64)
+  |     +-- aad: string (base64)
+  +-- agent_id?: string (target agent, omit for boss)
+  +-- message_type?: string (routing hint, e.g. 'chat', 'interactive_prompt')
 
 RelayControlMessage
   +-- type: 'ping' | 'pong' | 'backlog_truncated' | 'error'
@@ -75,7 +80,7 @@ Type guards:
 
 ### API Contracts (`src/api-contracts.ts`)
 
-Six API endpoint pairs:
+Eight API endpoint pairs:
 
 | Endpoint | Request Type | Response Type |
 |----------|-------------|---------------|
@@ -85,6 +90,8 @@ Six API endpoint pairs:
 | `POST /api/limerclaw/pairing/confirm` | `PairingConfirmRequest` | `PairingConfirmResponse` |
 | `GET /api/limerclaw/nodes/me` | (none) | `NodesListResponse` |
 | `POST /api/limerclaw/push/notify` | `PushNotifyRequest` | `PushNotifyResponse` |
+| `GET /api/limerclaw/nodes/:nodeId/agents` | (none) | `NodeAgentsListResponse` |
+| `POST /api/limerclaw/nodes/:nodeId/agents/sync` | `AgentSyncRequest` | `AgentSyncResponse` |
 
 Error responses use `ApiErrorResponse { error: string; details?: string }`.
 
@@ -98,6 +105,46 @@ Maps 1:1 to Supabase table schemas:
 | `LimerClawDeviceRow` | `limerclaw_devices` |
 | `LimerClawPairingSessionRow` | `limerclaw_pairing_sessions` |
 | `LimerClawPairingRow` | `limerclaw_pairings` |
+| `LimerClawNodeAgentRow` | `limerclaw_node_agents` |
+
+### Agent Types (`src/agent-types.ts`)
+
+Defines the agent system's type surface. All enums use the const-object-plus-type pattern.
+
+**Enums:**
+```
+AgentKind: boss | persistent | on-demand
+AgentStatus: active | paused | stopped
+ExecutionMode: run-to-completion | interactive
+AgentEventType: agent_created | agent_started | agent_stopped | agent_paused
+              | run_started | run_completed | run_failed
+              | interactive_waiting | interactive_responded
+```
+
+**Core interfaces:**
+- `AgentInfo` -- full agent record (id, name, kind, status, description, default_workflow_path, execution_mode, timestamps)
+- `AgentCreateRequest` / `AgentCreateResponse` -- create an agent
+- `AgentUpdateRequest` -- partial update of agent fields
+- `InteractivePrompt` / `InteractiveResponse` -- interactive agent Q&A messages
+- `AgentEvent` -- structured event for the agent event log
+- `ChatMessage` -- simple text message (optionally tagged with agent_id)
+- `ApprovalRequest` / `ApprovalResponse` -- tool-use approval flow
+
+**Decrypted payload types:**
+
+The encrypted `ciphertext` inside `LimerClawEnvelope.encryption` decrypts to one of these payload shapes, discriminated by the `type` field:
+
+```
+DecryptedPayload = ChatMessage
+                 | InteractivePrompt
+                 | InteractiveResponse
+                 | AgentEvent
+                 | ApprovalRequest
+                 | ApprovalResponse
+
+DecryptedMessageType = 'chat' | 'interactive_prompt' | 'interactive_response'
+                     | 'agent_event' | 'approval_request' | 'approval_response'
+```
 
 ## Versioning Strategy
 
