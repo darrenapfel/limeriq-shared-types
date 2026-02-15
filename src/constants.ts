@@ -27,6 +27,7 @@ export const EventType = {
   RUN_COMPLETED: 'run_completed',
   RUN_FAILED: 'run_failed',
   NODE_STATUS_CHANGED: 'node_status_changed',
+  CONFIG_CHANGED: 'config_changed',
 } as const;
 
 export type EventType = (typeof EventType)[keyof typeof EventType];
