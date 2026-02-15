@@ -138,7 +138,7 @@ export interface ApprovalRequest {
 export interface ApprovalResponse {
   type: 'approval_response';
   approval_id: string;
-  decision: 'approved' | 'denied' | 'approved_session';
+  decision: 'approved' | 'denied' | 'approved_session' | 'approved_agent' | 'approved_global';
 }
 
 // ── Union of all decrypted payload types ──
