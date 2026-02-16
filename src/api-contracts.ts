@@ -145,6 +145,37 @@ export interface AgentSyncResponse {
   synced_count: number;
 }
 
+// ── POST /api/limerclaw/events/publish (dashboard control plane) ──
+
+export interface EventPublishRequest {
+  event_type: string;
+  agent_id?: string | null;
+  space_id?: string | null;
+  payload?: Record<string, unknown> | null;
+  idempotency_key?: string | null;
+  prompt?: string | null;
+}
+
+export interface EventPublishResponse {
+  run_id: string | null;
+  agent_id: string | null;
+  status: string;
+  error: string | null;
+  event_type: string;
+}
+
+// ── Task dispatch metadata (worker wake-up/claim/run lifecycle) ──
+
+export interface TaskDispatchRunMetadata {
+  dispatcher: 'daemon_task_dispatch';
+  task_id: string;
+  run_id: string | null;
+  assignee_agent_id: string;
+  space_id: string | null;
+  status: 'dispatched' | 'succeeded' | 'blocked' | 'failed';
+  blocked_reason?: string | null;
+}
+
 // ── Common error response ──
 
 export interface ApiErrorResponse {
