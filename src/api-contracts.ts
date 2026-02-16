@@ -37,6 +37,17 @@ export interface NodeRegisterResponse {
   server_time: string;
 }
 
+// ── POST /api/limerclaw/nodes/:nodeId/heartbeat ──
+
+export interface NodeHeartbeatRequest {
+  node_id: string;
+}
+
+export interface NodeHeartbeatResponse {
+  node_id: string;
+  server_time: string;
+}
+
 // ── POST /api/limerclaw/pairing/create ──
 
 export interface PairingCreateRequest {
