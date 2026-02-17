@@ -35,6 +35,7 @@ export const AgentEventType = {
   agent_stopped: 'agent_stopped',
   agent_paused: 'agent_paused',
   run_started: 'run_started',
+  run_progress: 'run_progress',
   run_completed: 'run_completed',
   run_failed: 'run_failed',
   interactive_waiting: 'interactive_waiting',
