@@ -51,11 +51,30 @@ export interface LimerClawEnvelope {
 
 /** Relay control messages (ping, pong, backlog_truncated, error). */
 export interface RelayControlMessage {
-  type: 'ping' | 'pong' | 'backlog_truncated' | 'error';
+  type:
+    | 'ping'
+    | 'pong'
+    | 'backlog_truncated'
+    | 'error'
+    | 'connect_challenge'
+    | 'connect_auth'
+    | 'connect_ack';
   /** Present for error type. */
   message?: string;
   /** Present for backlog_truncated: how many were dropped. */
   dropped_count?: number;
+  /** Present for connect_challenge/connect_auth. */
+  nonce?: string;
+  /** Present for connect_challenge/connect_ack/connect_auth. */
+  ts?: number;
+  /** Present for connect_auth. */
+  proof?: string;
+  /** Present for connect_auth. */
+  peer_kind?: PeerKind;
+  /** Present for connect_auth. */
+  peer_id?: string;
+  /** Present for connect_auth. */
+  node_id?: string;
 }
 
 /** Union type for all messages on the relay WebSocket. */
