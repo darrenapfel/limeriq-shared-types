@@ -82,6 +82,8 @@ export interface ControlPlaneRunRequest {
   completed_at: string | null;
   created_at: string;
   updated_at: string;
+  source_run_request_id?: string;
+  inherited_variables?: Record<string, string>;
 }
 
 // ── Run Execution ──

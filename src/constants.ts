@@ -137,6 +137,7 @@ export const SdlcTriggerEvent = {
   PUSH: 'push',
   SCHEDULE: 'schedule',
   WORKFLOW_DISPATCH: 'workflow_dispatch',
+  AGENT_COMPLETED: 'agent_completed',
 } as const;
 
 export type SdlcTriggerEvent = (typeof SdlcTriggerEvent)[keyof typeof SdlcTriggerEvent];
