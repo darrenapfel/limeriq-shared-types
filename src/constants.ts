@@ -116,3 +116,27 @@ export type RelayControlType = (typeof RelayControlType)[keyof typeof RelayContr
 
 /** Default agent ID for the boss agent. */
 export const BOSS_AGENT_ID = 'boss';
+
+// ── Run conclusion (agent run outcomes) ──
+
+export const RunConclusionEnum = {
+  PASS: 'pass',
+  WARN: 'warn',
+  FAIL: 'fail',
+  ERROR: 'error',
+  SKIPPED: 'skipped',
+} as const;
+
+export type RunConclusionEnum = (typeof RunConclusionEnum)[keyof typeof RunConclusionEnum];
+
+// ── SDLC trigger events ──
+
+export const SdlcTriggerEvent = {
+  PULL_REQUEST: 'pull_request',
+  ISSUE_COMMENT: 'issue_comment',
+  PUSH: 'push',
+  SCHEDULE: 'schedule',
+  WORKFLOW_DISPATCH: 'workflow_dispatch',
+} as const;
+
+export type SdlcTriggerEvent = (typeof SdlcTriggerEvent)[keyof typeof SdlcTriggerEvent];
