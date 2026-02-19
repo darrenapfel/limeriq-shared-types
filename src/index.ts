@@ -14,3 +14,6 @@ export * from './trust-autonomy-contracts';
 export * from './telemetry-intelligence-contracts';
 export * from './setup-onboarding-contracts';
 export * from './dashboard-contracts';
+export * from './deployment-profile-contracts';
+export * from './runner-provider-contracts';
+export * from './setup-wizard-contracts';
