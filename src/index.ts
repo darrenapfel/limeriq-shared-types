@@ -12,3 +12,5 @@ export * from './reporter-contracts';
 export * from './control-plane-contracts';
 export * from './trust-autonomy-contracts';
 export * from './telemetry-intelligence-contracts';
+export * from './setup-onboarding-contracts';
+export * from './dashboard-contracts';
