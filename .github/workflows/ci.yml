@@ -46,6 +46,29 @@ jobs:
           node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
       - run: npm ci
-      - run: npm publish
+      - name: Check package version on registry
+        id: publish_check
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          if npm view "${PACKAGE_NAME}@${PACKAGE_VERSION}" version --registry=https://npm.pkg.github.com >/dev/null 2>&1; then
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "package_name=${PACKAGE_NAME}" >> "$GITHUB_OUTPUT"
+          echo "package_version=${PACKAGE_VERSION}" >> "$GITHUB_OUTPUT"
+      - name: Publish package
+        if: steps.publish_check.outputs.already_published == 'false'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Skip publish (version already exists)
+        if: steps.publish_check.outputs.already_published == 'true'
+        run: |
+          echo "Skipping publish for ${PACKAGE_NAME}@${PACKAGE_VERSION} (already exists on GitHub Packages)."
+        env:
+          PACKAGE_NAME: ${{ steps.publish_check.outputs.package_name }}
+          PACKAGE_VERSION: ${{ steps.publish_check.outputs.package_version }}
