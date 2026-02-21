@@ -123,15 +123,15 @@ describe('setup-onboarding-contracts', () => {
 
   it('REQUIRED_GITHUB_APP_PERMISSIONS has expected permissions', () => {
     expect(REQUIRED_GITHUB_APP_PERMISSIONS.checks).toBe('write');
-    expect(REQUIRED_GITHUB_APP_PERMISSIONS.pull_requests).toBe('write');
     expect(REQUIRED_GITHUB_APP_PERMISSIONS.contents).toBe('read');
+    expect(REQUIRED_GITHUB_APP_PERMISSIONS.issues).toBe('write');
     expect(REQUIRED_GITHUB_APP_PERMISSIONS.metadata).toBe('read');
+    expect(REQUIRED_GITHUB_APP_PERMISSIONS.pull_requests).toBe('write');
   });
 
   it('DEFAULT_WEBHOOK_EVENTS includes essential events', () => {
+    expect(DEFAULT_WEBHOOK_EVENTS).toContain('check_run');
     expect(DEFAULT_WEBHOOK_EVENTS).toContain('pull_request');
-    expect(DEFAULT_WEBHOOK_EVENTS).toContain('issue_comment');
     expect(DEFAULT_WEBHOOK_EVENTS).toContain('push');
-    expect(DEFAULT_WEBHOOK_EVENTS).toContain('installation');
   });
 });
