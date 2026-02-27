@@ -4,6 +4,15 @@
 
 `@darrenapfel/limeriq-shared-types` is a pure TypeScript types package that defines the wire formats, API contracts, database row types, agent automation contracts, run/reporter contracts, control plane contracts, trust/autonomy contracts, telemetry/intelligence contracts, setup/onboarding contracts, dashboard contracts, deployment profile contracts, runner provider contracts, setup wizard contracts, runtime state types, and constants shared across all limerIQ repositories. It has minimal devDependencies (`typescript` and `vitest`). It is published to GitHub Packages (`npm.pkg.github.com`) and consumed by downstream repos via the npm registry or git submodules.
 
+## Cross-Repo SoR Routing
+
+- Product Intent SoR and Work/Commitment SoR live in `limeriq/limeriq-product-intent`.
+- Canonical work items: https://github.com/limeriq/limeriq-product-intent/issues
+- Org project board: https://github.com/orgs/limeriq/projects/1 (`Limeriq Product Ops`)
+- This repo is an Implementation SoR for shared contracts. Link implementation PRs here to the canonical product-intent issue.
+
+`LIMERIQ_PROJECT_BOT_TOKEN` is only used by GitHub Actions in `limeriq-product-intent` for org project sync. Local terminal runs use exported credentials; limeriq bootstrap scripts in `limeriq-ops` can fall back to `gh auth token` when `GITHUB_TOKEN` or `NODE_AUTH_TOKEN` is unset.
+
 ## For Agents Working in This Repo
 
 ### Key Constraints
