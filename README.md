@@ -7,6 +7,21 @@
 - Agent/event payload types used by mobile and daemon.
 - Runtime state transition contracts (`runtime-state.ts`) for invariant telemetry.
 
+## Work Tracking (SoR)
+
+Planning and commitment tracking for limeriq lives in `limeriq/limeriq-product-intent`:
+
+- Canonical work items: https://github.com/limeriq/limeriq-product-intent/issues
+- Org project board: https://github.com/orgs/limeriq/projects/1 (`Limeriq Product Ops`)
+
+Use this repo for implementation changes to shared contracts, and link changes back to the canonical product-intent issue.
+
+## Auth Note
+
+`LIMERIQ_PROJECT_BOT_TOKEN` is only used by GitHub Actions in `limeriq-product-intent` for org project sync.
+
+Local terminal runs use exported credentials; limeriq bootstrap scripts in `limeriq-ops` can fall back to `gh auth token` when `GITHUB_TOKEN` or `NODE_AUTH_TOKEN` is unset.
+
 ## Consumers
 
 - `/Users/darrenapfel/DEVELOPER/limeriq-client`
