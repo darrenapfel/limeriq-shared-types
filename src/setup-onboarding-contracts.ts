@@ -64,15 +64,16 @@ export interface HealthCheckComponent {
 /** Required GitHub App permissions for limerIQ agents */
 export const REQUIRED_GITHUB_APP_PERMISSIONS = {
   checks: 'write',
-  contents: 'read',
-  issues: 'write',
-  metadata: 'read',
   pull_requests: 'write',
+  contents: 'read',
+  metadata: 'read',
 } as const;
 
 /** Default webhook events the GitHub App should subscribe to */
 export const DEFAULT_WEBHOOK_EVENTS = [
-  'check_run',
   'pull_request',
+  'issue_comment',
   'push',
+  'installation',
+  'check_run',
 ] as const;
